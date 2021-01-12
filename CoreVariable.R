@@ -1,3 +1,13 @@
+# Used for making "manual" loading
+CoreVarFile <- T
+
+# This module gives the S4 class definition of the
+# CoreVariable type, around which is built most of 
+# The project.
+# Note that this module only gives the raw definition
+# of the class, while constructors and operator overloading
+# are defined in other modules.
+
 # Class storing the cdf and pmf functions.
 CoreVariable <- setClass (
   # Name of the class.
@@ -24,42 +34,3 @@ CoreVariable <- setClass (
   #  return(T)
   #}
 )
-
-# Creates a CoreVariable from a pmf
-BuildFromPMF <- function(pmf) {
-  cdf <- function(x) {
-    return(integrate(pmf, -Inf, x))
-    # Should get rid of the "With precision of ..."
-  }
-  
-  variable <- CoreVariable(cdf=cdf, pmf=pmf)
-  
-  return(variable)
-}
-
-BuildFromCDF <- function(cdf) {
-  eps <- 1e-6
-  pmf <- function(x) {
-    return((cdf(x + eps) - cdf(x)) / eps)
-  }
-  
-  variable <- CoreVariable(cdf=cdf, pmf = pmf)
-}
-
-std <- function(x) {
-  return(exp(-x*x/2)/sqrt(2*pi))
-}
-
-unif <- function(x) {
-  if (x < 0)
-    return(0)
-  if (x > 1)
-    return(1)
-  return(x)
-}
-
-# Build 2 random vars.
-v1 <- BuildFromPMF(std)
-
-v2 <- BuildFromCDF(unif)
-
