@@ -21,6 +21,9 @@ setMethod(f="+",
     }
 )
 
+## WHAT IS BELLOW ONLY EXISTS FOR DEBUGGING.
+## THIS MODULE SHOULD NOT CONTAIN ANY VARIABLES OR ADDITIONAL SOURCES
+
 # CDF and PMF constructors of the CoreVariable.
 if (!exists('ConstructorsFile'))
     source('Constructors.R')
