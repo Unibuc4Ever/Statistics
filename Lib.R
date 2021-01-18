@@ -25,3 +25,11 @@ if (!exists('FunctionOverloadFile'))
 # Overload of the print function.
 if (!exists('OperatorOverloadFile'))
   source('OperatorOverload.R')
+
+# Include main distributions.
+if (!exists('MainDistributionsFile'))
+  source('MainDistributions.R')
+
+# Usefull functions.
+if (!exists('UtilitiesFile'))
+  source('Utilities.R')

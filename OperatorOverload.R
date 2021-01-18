@@ -49,7 +49,7 @@ setMethod(f="-",
   }
 )
 
-# Adunarea a doua variabile
+# Inmultirea a doua variabile
 setMethod(f="*",
   signature = c("CoreVariable", "CoreVariable"),
   definition = function(e1, e2) {
@@ -61,9 +61,8 @@ setMethod(f="*",
           return(e1@pdf(k) * e2@pdf(x / k))
         }
         
-        eps <- 10^-5
-        rez_x <- integrate(convolutie, -10^5, -eps)$value +
-                 integrate(convolutie, eps, 10^5)$value
+        eps <- 10^-9
+        rez_x <- integrate(convolutie, -Inf, Inf)$value
         ans <- c(ans, rez_x)
       }
 
@@ -72,5 +71,42 @@ setMethod(f="*",
 
     new_var <- BuildFromPDF(new_pdf)
     return(new_var)
+  }
+)
+
+#########################################################################################
+#                                                                                       #
+#                               Operatii cu constante.                                  #
+#                                                                                       #
+#########################################################################################
+
+# Adunarea cu o constanta.
+setMethod(f="+",
+  signature = c("CoreVariable", "numeric"),
+  definition = function(e1, e2) {
+    new_pdf <- function(x) {
+      return(e1@pdf(x - e2))
+    }
+    return(BuildFromPDF(new_pdf))
+  }
+)
+setMethod(f="+",
+  signature = c("numeric", "CoreVariable"),
+  definition = function(e1, e2) {
+    return(e2 + e1)
+  }
+)
+
+# Scaderea cu o constanta.
+setMethod(f="-",
+  signature = c("CoreVariable", "numeric"),
+  definition = function(e1, e2) {
+    return(e1 + (-e2))
+  }
+)
+setMethod(f="-",
+  signature = c("numeric", "CoreVariable"),
+  definition = function(e1, e2) {
+    return((-e2) + e1)
   }
 )
