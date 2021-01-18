@@ -25,7 +25,7 @@ BuildFromPMF <- function(pmf) {
 BuildFromCDF <- function(cdf) {
   eps <- 1e-6
   pmf <- function(x) {
-    return((cdf(x + eps) - cdf(x)) / eps)
+    return((cdf(x + eps / 2) - cdf(x - eps / 2)) / eps)
   }
   
   variable <- CoreVariable(cdf=cdf, pmf = pmf)
