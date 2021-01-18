@@ -2,21 +2,21 @@
 ConstructorsFile <- T
 
 # This module is able to build `CoreVariable` objects
-# With one of the pmf or cdf functions.
-# To extract cdf from pmf it's enough to integrate (-Inf, x)
-# To extract pmf from cdf it's enough to differenciate
+# With one of the pdf or cdf functions.
+# To extract cdf from pdf it's enough to integrate (-Inf, x)
+# To extract pdf from cdf it's enough to differenciate
 
 if (!exists('CoreVarFile'))
-    source('CoreVariable.R')
+  source('CoreVariable.R')
 
-# Creates a CoreVariable from a pmf
-BuildFromPMF <- function(pmf) {
+# Creates a CoreVariable from a pdf
+BuildFromPDF <- function(pdf) {
   cdf <- function(x) {
-    return(integrate(pmf, -Inf, x)$value)
+    return(integrate(pdf, -Inf, x)$value)
     # TODO: Fix precision errors
   }
   
-  variable <- CoreVariable(cdf=cdf, pmf=pmf)
+  variable <- CoreVariable(cdf=cdf, pdf=pdf)
   
   return(variable)
 }
@@ -24,11 +24,11 @@ BuildFromPMF <- function(pmf) {
 # Creates a CoreVariable from a cdf
 BuildFromCDF <- function(cdf) {
   eps <- 1e-6
-  pmf <- function(x) {
+  pdf <- function(x) {
     return((cdf(x + eps / 2) - cdf(x - eps / 2)) / eps)
   }
   
-  variable <- CoreVariable(cdf=cdf, pmf = pmf)
+  variable <- CoreVariable(cdf=cdf, pdf = pdf)
 
   return(variable)
 }

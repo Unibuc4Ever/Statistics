@@ -1,13 +1,22 @@
 # Used as guards
 FunctionOverloadFile <- T
 
+if (!exists('CoreVarFile'))
+  source('CoreVariable.R')
+
 setMethod(f="print",
-    signature=c("CoreVariable"),
-    definition=function(x)
-    {
-        print("Wassaaaap?")
-        print("Value of the CoreVar:")
-        print("PMF: ", x@pmf)
-        print("CDF: ", x@cdf)
-    }
+  signature=c("CoreVariable"),
+  definition=function(x) {
+    print("Wassaaaap?")
+    print("Value of the CoreVar:")
+    print("PMF: ", x@pdf)
+    print("CDF: ", x@cdf)
+  }
+)
+
+setMethod(f="plot",
+  signature=c("CoreVariable"),
+  definition=function(x) {
+    plot(x@pdf, -10, 10)
+  }
 )
