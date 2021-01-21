@@ -18,18 +18,18 @@ CoreVariable <- setClass (
   # the real type of the functions.
   slots = c (
     cdf = "ANY",
-    pmf = "ANY"
+    pdf = "ANY"
   ),
   
   # If we want to set a prototype.
   #     prototype = list (
   #         cdf = ...,
-  #         pmf = ...
+  #         pdf = ...
   #     )
   
   # Checks if the object is valid.
   #validity = function(object) {
-  #  if (abs(integrate(object@pmf, -Inf, Inf) - 1) > 1e-3)
+  #  if (abs(integrate(object@pdf, -Inf, Inf) - 1) > 1e-3)
   #    return("CSF doesn't have 1 as limit at +Inf!")
   #  return(T)
   #}

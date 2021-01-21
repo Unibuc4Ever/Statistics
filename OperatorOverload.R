@@ -2,51 +2,111 @@
 OperatorOverload <- T
 
 if (!exists('CoreVarFile'))
-    source('CoreVariable.R')
+  source('CoreVariable.R')
 
-# Habar n-am daca are sens sau e o aberatie
+# Adunarea a doua variabile
 setMethod(f="+",
-    signature=c("CoreVariable", "CoreVariable"),
-    definition=function(e1, e2)
-    {
-        new_pmf <- function(x) {
-            convolutie <- function(k) {
-                return(e1@pmf(k) * e2@pmf(x - k))
-            }
-            return(integrate(convolutie, -Inf, Inf)$value)
+  signature = c("CoreVariable", "CoreVariable"),
+  definition = function(e1, e2) {
+    new_pdf <- function(x_list) {
+      ans <- c()
+
+      for (x in x_list) {
+        convolutie <- function(k) {
+          return(e1@pdf(k) * e2@pdf(x - k))
+        }
+        
+        rez_x <- integrate(convolutie, -Inf, Inf)$value
+        ans <- c(ans, rez_x)
+      }
+
+      return(ans)
+    }
+
+    new_var <- BuildFromPDF(new_pdf)
+    return(new_var)
+  }
+)
+
+# Negarea unei variabile
+setMethod(f="-",
+    signature = "CoreVariable",
+    definition = function(e1) {
+        new_pdf <- function(x) {
+          return(e1@pdf(-x))
         }
 
-        new_var <- BuildFromPMF(new_pmf)
+        new_var <- BuildFromPDF(new_pdf)
         return(new_var)
     }
 )
 
-## WHAT IS BELLOW ONLY EXISTS FOR DEBUGGING.
-## THIS MODULE SHOULD NOT CONTAIN ANY VARIABLES OR ADDITIONAL SOURCES
+# Scaderea a doua variabile
+setMethod(f="-",
+  signature = c("CoreVariable", "CoreVariable"),
+  definition = function(e1, e2) {
+    return(e1 + (-e2))
+  }
+)
 
-# CDF and PMF constructors of the CoreVariable.
-if (!exists('ConstructorsFile'))
-    source('Constructors.R')
+# Inmultirea a doua variabile
+setMethod(f="*",
+  signature = c("CoreVariable", "CoreVariable"),
+  definition = function(e1, e2) {
+    new_pdf <- function(x_list) {
+      ans <- c()
 
-    
-std <- function(x) {
-  return(exp(-x*x/2)/sqrt(2*pi))
-}
+      for (x in x_list) {
+        convolutie <- function(k) {
+          return(e1@pdf(k) * e2@pdf(x / k))
+        }
+        
+        eps <- 10^-9
+        rez_x <- integrate(convolutie, -Inf, Inf)$value
+        ans <- c(ans, rez_x)
+      }
 
-unif <- function(x) {
-  if (x < 0)
-    return(0)
-  if (x > 1)
-    return(1)
-  return(x)
-}
+      return(ans)
+    }
 
-# Build 2 random vars.
-v1 <- BuildFromPMF(std)
-v2 <- BuildFromCDF(unif)
+    new_var <- BuildFromPDF(new_pdf)
+    return(new_var)
+  }
+)
 
-(v1+v1)@pmf(0)
+#########################################################################################
+#                                                                                       #
+#                               Operatii cu constante.                                  #
+#                                                                                       #
+#########################################################################################
 
-# TODO: Find wth this doesn't work
-v2@pmf(0.5)
-(v2 + v2)@pmf(2) # Doesn't work (yet)
+# Adunarea cu o constanta.
+setMethod(f="+",
+  signature = c("CoreVariable", "numeric"),
+  definition = function(e1, e2) {
+    new_pdf <- function(x) {
+      return(e1@pdf(x - e2))
+    }
+    return(BuildFromPDF(new_pdf))
+  }
+)
+setMethod(f="+",
+  signature = c("numeric", "CoreVariable"),
+  definition = function(e1, e2) {
+    return(e2 + e1)
+  }
+)
+
+# Scaderea cu o constanta.
+setMethod(f="-",
+  signature = c("CoreVariable", "numeric"),
+  definition = function(e1, e2) {
+    return(e1 + (-e2))
+  }
+)
+setMethod(f="-",
+  signature = c("numeric", "CoreVariable"),
+  definition = function(e1, e2) {
+    return((-e2) + e1)
+  }
+)

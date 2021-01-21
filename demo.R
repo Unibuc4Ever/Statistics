@@ -1,22 +1,30 @@
 source('Lib.R')
 
-
-std <- function(x) {
-  return(exp(-x*x/2)/sqrt(2*pi))
-}
-
-unif <- function(x) {
-  if (x < 0)
-    return(0)
-  if (x > 1)
-    return(1)
-  return(x)
-}
-
 # Build 2 random vars.
-v1 <- BuildFromPMF(std)
-v2 <- BuildFromCDF(unif)
+v1 <- BuildNormalDistribution(1, 1)
+v2 <- BuildUniformDistribution(0, 1)
+v3 <- v1 + v2
+v4 <- -v2
+v5 <- v1 - v2
+v6 <- v1 * v2
 
+plot(BuildNormalDistribution(0, 5))
 
-print(v1) # Works, uses custom print function
-v1 # Doesnt work, i don't know which function is used
+plot(v2@pdf)
+plot(v3)
+
+hist(v2@pdf)
+
+mean(v1)
+
+v1@pdf(0)
+v2@pdf(0.5)
+v6@pdf(0.5)
+v3@pdf(c(10, 11))
+
+v6@pdf(0)
+plot(v6)
+
+for (i in c(1, 2, 4)) {
+  print(i)
+}
