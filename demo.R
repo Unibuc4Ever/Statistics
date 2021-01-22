@@ -32,3 +32,7 @@ for (i in c(1, 2, 4)) {
 }
 
 # Task 6
+g <- function(x) {
+  return(x + 1)
+}
+ComputeMeanForFunc(v1, g)

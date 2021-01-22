@@ -16,7 +16,7 @@ if (!exists('FunctionOverloadFile'))
 CentralMoment <- function(x, order) {
   mean <- mean(x)
   integrant <- function(t) {
-    return((t - mean) ^ order * x@pdf(t)) # TODO: solve error in "t - mean": non-numeric argument to binary operator
+    return((t - mean) ^ order * x@pdf(t))
   }
   # To check if we want to remove "With absolute error ..."
   return(integrate(integrant, -Inf, Inf))
