@@ -6,6 +6,8 @@ MainDistributionsFile <- T
 if (!exists('ConstructorsFile'))
   source('Constructors.R')
 
+# Task 4
+
 # Builds an uniform distribution from st to dr.
 BuildUniformDistribution <- function(st, dr) {
   if (st >= dr)
@@ -31,6 +33,53 @@ BuildNormalDistribution <- function(mean, stddev) {
 
   pdf <- function(x) {
     exp(-1/2 * (x - mean / stddev)^2) / (stddev * sqrt(2 * pi))
+  }
+
+  return(BuildFromPDF(pdf))
+}
+
+# Builds an exponential distribution given the rate parameter.
+BuildExponentialDistribution <- function(lambda) {
+  if (lambda <= 0)
+    stop("Invalid rate parameter for exponential distribution!")
+
+  pdf <- function(x) {
+    ifelse(x >= 0,
+      lambda*exp(-lambda*x),
+      0
+    )
+  }
+
+  return(BuildFromPDF(pdf))
+}
+
+# Utility function for computing gamma. Used for computing the pdf 
+# of a chi-square distribution.
+ComputeGamma <- function(n) {
+  if (n == round(n))
+    return (factorial(n - 1))
+  if (n > 1)
+    return ((n - 1) * gama(n - 1))
+  if (n == 0.5)
+    return (sqrt(pi))
+  
+  return (integrate(
+      function(x, a) { x ^ (a - 1) * exp(-x) }, 
+      0, 
+      Inf, 
+      a = n)$value)
+}
+
+# Builds a chi-square distribution given the number of degrees of freedom.
+BuildChiSquareDistribution <- function(k) {
+  if (k <= 0)
+    stop("Invalid number of degrees of freedom for chi-square distribution!")
+
+  pdf <- function(x) {
+    ifelse(x >= 0,
+      (1 / (2^(k / 2) * ComputeGamma(k / 2))) * x^(k / 2 - 1) * exp(-x / 2),
+      0
+    )
   }
 
   return(BuildFromPDF(pdf))
