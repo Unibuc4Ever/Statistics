@@ -1,30 +1,171 @@
+# Authors: Raluca Tudor
+#          Moroianu Theodor
+#          Puscasu Felix
+# Project: R Package with support for contignous random variables
+# Date:    22 / 01 / 2021
+
+
+# Importam pachetul.
 source('Lib.R')
 
-# Build 2 random vars.
-v1 <- BuildNormalDistribution(1, 1)
-v2 <- BuildUniformDistribution(0, 1)
-v3 <- v1 + v2
-v4 <- -v2
-v5 <- v1 - v2
-v6 <- v1 * v2
 
-plot(BuildNormalDistribution(0, 5))
+###########################################################
+#                                                         #
+#                        Cerinta I                        #
+#                                                         #
+###########################################################
 
-plot(v2@pdf)
-plot(v3)
+# Functie care poate fi normalizata
+ComputeNormalizationConstant(
+  function(x) {
+    if (x > 0 && x < 1)
+      return(2)
+    return(0)
+  }
+)
 
-hist(v2@pdf)
+# Functie care nu poate fi normalizata
+ComputeNormalizationConstant(
+  function(x) {
+    if (x > 0 && x < 1)
+      return(2)
+    if (x > 2 && x < 3)
+      return(-1)
+    return(0)
+  }
+) # WTF =============================
 
-mean(v1)
 
-v1@pdf(0)
-v2@pdf(0.5)
-v6@pdf(0.5)
-v3@pdf(c(10, 11))
 
-v6@pdf(0)
-plot(v6)
+###########################################################
+#                                                         #
+#                        Cerinta II                       #
+#                                                         #
+###########################################################
 
-for (i in c(1, 2, 4)) {
-  print(i)
+# Functie care este densitate de probabilitate.
+CheckIfFunctionIsPDF(
+  function(x) {
+    if (x > 0 && x < 1)
+      return(1)
+    return(0)
+  }
+)
+
+# Functie care nu este densitate de probabilitate.
+CheckIfFunctionIsPDF(
+  function(x) {
+    if (x > 0 && x < 1)
+      return(2)
+    return(0)
+  }
+)
+
+
+###########################################################
+#                                                         #
+#                        Cerinta III                      #
+#                                                         #
+###########################################################
+
+pdf <- function(x) {
+  if (x >= 0 && x <= 1)
+    return(1)
+  return(0)
 }
+
+var <- BuildFromPDF(pdf)
+
+cdf <- function(x) {
+  if (x < 0)
+    return(0)
+  if (x > 1)
+    return(1)
+  return(x)
+}
+
+var2 <- BuildFromCDF(cdf)
+
+
+###########################################################
+#                                                         #
+#                        Cerinta IV                       #
+#                                                         #
+###########################################################
+
+
+
+###########################################################
+#                                                         #
+#                        Cerinta V                        #
+#                                                         #
+###########################################################
+
+
+###########################################################
+#                                                         #
+#                        Cerinta VI                       #
+#                                                         #
+###########################################################
+
+
+###########################################################
+#                                                         #
+#                        Cerinta VII                      #
+#                                                         #
+###########################################################
+
+
+###########################################################
+#                                                         #
+#                        Cerinta VIII                     #
+#                                                         #
+###########################################################
+
+
+###########################################################
+#                                                         #
+#                        Cerinta IX                       #
+#                                                         #
+###########################################################
+
+
+###########################################################
+#                                                         #
+#                        Cerinta X                        #
+#                                                         #
+###########################################################
+
+
+###########################################################
+#                                                         #
+#                        Cerinta XI                       #
+#                                                         #
+###########################################################
+
+common_dist <- function(x, y) {
+  if (x < 0 || y < 0 || x > 1 || y > 2)
+    return(0)
+  return(1/2)
+}
+
+v1 <- BuildFromCommonPDF(common_dist, ax=1)
+plot(v1)
+v2 <- BuildFromCommonPDF(common_dist, ax=2)
+plot(v2)
+v3 <- BuildConditionalPDF(common_dist, 2, 1) # WTF????
+
+
+###########################################################
+#                                                         #
+#                        Cerinta XII                      #
+#                                                         #
+###########################################################
+
+v1 <- BuildUniformDistribution(1, 2)
+v2 <- BuildNormalDistribution(2, 3)
+v3 <- v1 + v2
+v4 <- v1 - v2
+v5 <- -v1
+v6 <- v1 * v2
+# TODO: Add numeric types

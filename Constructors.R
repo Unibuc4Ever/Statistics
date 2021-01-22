@@ -9,14 +9,21 @@ ConstructorsFile <- T
 if (!exists('CoreVarFile'))
   source('CoreVariable.R')
 
+if (!exists('UtilitiesFile'))
+  source('Utilities.R')
+
 # Creates a CoreVariable from a pdf
 BuildFromPDF <- function(pdf) {
+  vectorized_pdf <- MakeVectorized(pdf)
+
   cdf <- function(x) {
-    return(integrate(pdf, -Inf, x)$value)
-    # TODO: Fix precision errors
+    ans <- c()
+    for (elem in x)
+      ans <- c(ans, integrate(vectorized_pdf, -Inf, elem)$value)
+    return(ans)
   }
   
-  variable <- CoreVariable(cdf=cdf, pdf=pdf)
+  variable <- CoreVariable(cdf=MakeVectorized(cdf), pdf=vectorized_pdf)
   
   return(variable)
 }
@@ -28,7 +35,52 @@ BuildFromCDF <- function(cdf) {
     return((cdf(x + eps / 2) - cdf(x - eps / 2)) / eps)
   }
   
-  variable <- CoreVariable(cdf=cdf, pdf = pdf)
-
+  variable <- CoreVariable(cdf=MakeVectorized(cdf), pdf=MakeVectorized(pdf))
+  
   return(variable)
+}
+
+# Returns a CoreVariable.
+# If ax=1 then returns X, else return Y
+BuildFromCommonPDF <- function(commonpdf, ax)
+{
+  if (ax != 1 && ax != 2)
+    stop("AX must be 1 or 2!")
+  
+  new_pdf <- function(point) {
+    val_in_point <- function(w) {
+      if (ax == 1)
+        return(commonpdf(point, w))
+      else
+        return(commonpdf(w, point))
+    }
+    return(integrate(MakeVectorized(val_in_point), -Inf, Inf)$value)
+  }
+  return(BuildFromPDF(new_pdf))
+}
+
+# Returns a CoreVariable.
+# Ax identifies the axis with set value "value"
+BuildConditionalPDF <- function(commonpdf, ax, val)
+{
+  if (ax != 1 && ax != 2)
+    stop("AX must be 1 or 2!")
+
+  new_pdf <- function(point) {
+    if (ax == 1)
+      return(commonpdf(val, point))
+    else
+      return(commonpdf(point, val)) 
+  }
+
+  integral <- integrate(MakeVectorized(new_pdf), -Inf, Inf)
+
+  if (integral < 0 || abs(integral) < 1e-5)
+    stop("Invalid slice of the distribution at given point!")
+
+  real_new_pdf <- function(point) {
+    return(new_pdf(point) / integral)
+  }
+
+  return(BuildFromPDF(real_new_pdf))
 }
