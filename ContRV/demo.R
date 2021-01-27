@@ -1,7 +1,7 @@
-# Authors: Raluca Tudor
-#          Moroianu Theodor
+# Authors: Moroianu Theodor
 #          Puscasu Felix
-# Project: R Package with support for contignous random variables
+#          Tudor Raluca
+# Project: R Package with support for continuous random variables
 # Date:    22 / 01 / 2021
 
 

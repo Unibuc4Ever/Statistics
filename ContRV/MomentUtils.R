@@ -1,8 +1,6 @@
 # Used as guard
 MomentUtilsFile <- T
 
-# This module is able to compute .
-
 if (!exists('ConstructorsFile'))
   source('Constructors.R')
 
