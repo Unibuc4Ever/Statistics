@@ -96,3 +96,22 @@ SamplePointsFromDistribution = function(dist, size) {
   }
   return(ans)
 }
+
+# Calculul mediei unei variabile aleatoare g(X).
+ComputeMeanForFunc <- function(X, g) {
+  integrant <- function(t) {
+    return(g(t) * X@pdf(t))
+  }
+  # To check if we want to remove "With absolute error ..."
+  return(integrate(integrant, -Inf, Inf)$value)
+}
+
+# Calculul dispersiei unei variabile aleatoare g(X).
+# Var(X) = E(X^2) - E^2[X]
+# X -> g(X)
+# Var(g(X)) = E(g^2(X)) - E^2[g(X)]
+ComputeVarForFunc <- function(X, g) {
+  avggx  <- ComputeMeanForFunc(X, g)
+  avgg2x <- ComputeMeanForFunc(X, function(x) { return(g(x)*g(x)) })
+  return(avgg2x - avggx^2)
+}
