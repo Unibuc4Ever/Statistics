@@ -1,6 +1,3 @@
-# Used as guards
-UtilitiesFile <- T
-
 # To be impoved
 Integrate <- function(f, st, dr) {
   st <- max(st, -30)
@@ -111,4 +108,32 @@ ComputeVarForFunc <- function(X, g) {
   avggx  <- ComputeMeanForFunc(X, g)
   avgg2x <- ComputeMeanForFunc(X, function(x) { return(g(x)*g(x)) })
   return(avgg2x - avggx^2)
+}
+
+
+# Computes a conditional probability
+# Conditional(var, a, b) is equivalent to P(a(var) | b(var))
+Conditional <- function(var, a, b = function(x) { return(T) }) {
+  
+  # returns measure of var which respects f
+  RespectFunction <- function(f) {
+    nr_is_ok <- function(x) {
+      if (f(x))
+        return(var@pdf(x))
+      return(0)
+    }
+
+    ans <- Integrate(MakeVectorized(nr_is_ok), -Inf, Inf)
+    
+    return(ans)
+  }
+
+  both <- function(x) {
+    return(a(x) && b(x))
+  }
+
+  a_and_b <- RespectFunction(both)
+  b <- RespectFunction(b)
+
+  return(a_and_b / b)
 }

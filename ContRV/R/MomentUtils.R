@@ -1,13 +1,3 @@
-# Used as guard
-MomentUtilsFile <- T
-
-if (!exists('ConstructorsFile'))
-  source('Constructors.R')
-
-if (!exists('FunctionOverloadFile'))
-  source('FunctionOverload.R')
-
-
 # Computes the n-th raw moment of a random variable. 
 # Note that the first raw moment is the mean.
 RawMoment <- function(x, order) {
