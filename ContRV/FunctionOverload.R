@@ -8,8 +8,7 @@ setMethod(
   f = "print",
   signature = c("CoreVariable"),
   definition = function(x) {
-    print("Wassaaaap?")
-    print("Value of the CoreVar:")
+    print("Value of the CoreVariable:")
     print("PMF: ", x@pdf)
     print("CDF: ", x@cdf)
   }
