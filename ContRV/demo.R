@@ -191,8 +191,16 @@ hist(vals)
 source('Lib.R')
 
 common_pdf <- function(x, y) {
-
+  if (min(x, y) < 0 || max(x, y) > 4)
+    return(0)
+  if (x + y > 6 || x + y < 2)
+    return(0)
+  return(1 / 12)
 }
+
+cov <- Covariance2d(common_pdf)
+print(cov)
+
 
 ###########################################################
 #                                                         #
