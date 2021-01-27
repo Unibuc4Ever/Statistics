@@ -19,28 +19,6 @@ setMethod(
   f = "plot",
   signature = c("CoreVariable"),
   definition = function(x) {
-    plot(x@pdf, -10, 10)
-  }
-)
-
-setMethod(
-  f = "mean",
-  signature = c("CoreVariable"),
-  definition = function(x) {
-    integrant <- function(t) {
-      return(t * x@pdf(t))
-    }
-    # To check if we want to remove "With absolute error ..."
-    return(Integrate(integrant, -Inf, Inf))
-  }
-)
-
-setMethod(
-  f = "var",
-  signature = c("CoreVariable"),
-  definition = function(x) {
-    avgx <- mean(x)
-    avgx2 <- mean(x * x)
-    return(avgx2 - avgx^2)
+    plot(x@pdf, -30, 30)
   }
 )

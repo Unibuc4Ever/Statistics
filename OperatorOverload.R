@@ -110,3 +110,30 @@ setMethod(f="-",
     return((-e2) + e1)
   }
 )
+
+setMethod(f="*",
+  signature = c("numeric", "CoreVariable"),
+  definition = function(e1, e2) {
+    if (abs(e1) < 1e-5)
+      stop("Unable to multiply by 0!")
+      
+    new_pdf <- function(x) {
+      return(e2@pdf(x / e1))
+    }
+    return(BuildFromPDF(new_pdf))
+  }
+)
+
+setMethod(f="*",
+  signature = c("CoreVariable", "numeric"),
+  definition = function(e1, e2) {
+    return(e2 * e1)
+  }
+)
+
+setMethod(f="/",
+  signature = c("CoreVariable", "numeric"),
+  definition = function(e1, e2) {
+    return(e1 * (1 / e2))
+  }
+)

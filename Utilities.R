@@ -25,10 +25,8 @@ Minimum <- function(f, st, dr) {
 
   ans <- 1e9
 
-  for (i in seq(st, dr, 10)) {
-    act <- optimize(f, interval=c(st, min(dr, i)))$minimum
-    ans <- min(ans, act)
-  }
+  for (i in seq(st, dr, 1e-2))
+    ans <- min(ans, f(i))
   
   return(ans)
 }
@@ -48,7 +46,7 @@ CheckIfFunctionIsPDF <- function(pdf) {
   vectorized_pdf <- MakeVectorized(pdf)
 
   # Should do smth about limits
-  minimum <- Minimum(vectorized_pdf)
+  minimum <- Minimum(vectorized_pdf, -1e9, 1e9)
   integral <- Integrate(vectorized_pdf, -Inf, Inf)
 
   # Pozitive and integral 1
@@ -82,11 +80,10 @@ SamplePointsFromDistribution = function(dist, size) {
   val = runif(size)
 
   for (x in val) {
-    print(x)
     # Cautam binar raspunsul
-    p <- -1e9
-    pas <- 1e9
-    for (idk in 1:100) {
+    p <- -100
+    pas <- 100
+    for (idk in 1:20) {
       act <- p + pas
       if (dist@cdf(act) <= x)
         p <- p + pas

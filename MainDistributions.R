@@ -32,7 +32,7 @@ BuildNormalDistribution <- function(mean, stddev) {
     stop("Invalid standard deviation for normal distribution!")
 
   pdf <- function(x) {
-    exp(-1/2 * (x - mean / stddev)^2) / (stddev * sqrt(2 * pi))
+    exp(-1/2 * ((x - mean) / stddev)^2) / (stddev * sqrt(2 * pi))
   }
 
   return(BuildFromPDF(pdf))
