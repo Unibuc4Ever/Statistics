@@ -37,3 +37,7 @@ if (!exists('UtilitiesFile'))
 # 
 if (!exists('MomentUtilsFile'))
   source('MomentUtils.R')
+
+# Sinteza
+if (!exists('Information'))
+  source('Information.R')
