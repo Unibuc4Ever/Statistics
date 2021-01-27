@@ -1,9 +1,3 @@
-# Used for guards
-OperatorOverload <- T
-
-if (!exists('CoreVarFile'))
-  source('CoreVariable.R')
-
 # Adunarea a doua variabile
 setMethod(f="+",
   signature = c("CoreVariable", "CoreVariable"),

@@ -1,18 +1,10 @@
-# Used as guard
-ConstructorsFile <- T
-
 # This module is able to build `CoreVariable` objects
 # With one of the PDF or CDF functions.
 # To extract CDF from PDF it's enough to integrate (-Inf, x).
 # To extract PDF from CDF it's enough to differentiate.
 
-if (!exists('CoreVarFile'))
-  source('CoreVariable.R')
-
-if (!exists('UtilitiesFile'))
-  source('Utilities.R')
-
 # Creates a CoreVariable from a PDF.
+#' @export
 BuildFromPDF <- function(pdf) {
   vectorized_pdf <- MakeVectorized(pdf)
 
@@ -29,6 +21,7 @@ BuildFromPDF <- function(pdf) {
 }
 
 # Creates a CoreVariable from a CDF.
+#' @export
 BuildFromCDF <- function(cdf) {
   eps <- 1e-6
   pdf <- function(x) {

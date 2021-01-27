@@ -1,6 +1,3 @@
-# Used for making "manual" loading
-CoreVarFile <- T
-
 # This module gives the S4 class definition of the
 # CoreVariable type, around which is built most of 
 # The project.

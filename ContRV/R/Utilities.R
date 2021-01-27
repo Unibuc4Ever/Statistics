@@ -1,6 +1,3 @@
-# Used as guards
-UtilitiesFile <- T
-
 # To be impoved
 Integrate <- function(f, st, dr) {
   st <- max(st, -30)

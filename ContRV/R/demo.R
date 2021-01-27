@@ -6,7 +6,27 @@
 
 
 # Importam pachetul.
-source('Lib.R')
+
+# Raw definition of the CoreVariable class.
+source('CoreVariable.R')
+    
+# CDF and PMF constructors of the CoreVariable.
+source('Constructors.R')
+
+# Overload of various functions function.
+source('FunctionOverload.R')
+
+# Overload of the print function.
+source('OperatorOverload.R')
+
+# Include main distributions.
+source('MainDistributions.R')
+
+# Useful functions.
+source('Utilities.R')
+
+# 
+source('MomentUtils.R')
 
 
 ###########################################################
