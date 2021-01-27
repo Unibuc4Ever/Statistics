@@ -6,8 +6,17 @@ MainDistributionsFile <- T
 if (!exists('ConstructorsFile'))
   source('Constructors.R')
 
-# Task 4
 
+#' Personal greeting
+#'
+#' @description Greet a person and appropriately capitalize their name.
+#'
+#' @param name Your name (character string; e.g. "john doe").
+#'
+#' @return A character string, capitalized to title case.
+#' @export
+#'
+#' @examples
 # Builds an uniform distribution from st to dr.
 BuildUniformDistribution <- function(st, dr) {
   if (st >= dr)
