@@ -220,6 +220,9 @@ prob2 <- Conditional(v1, is_smaller_2)
 #                                                         #
 ###########################################################
 
+source('Lib.R')
+Information('Exponentiala')
+Information('Normala')
 
 
 ###########################################################
