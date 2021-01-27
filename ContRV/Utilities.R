@@ -11,7 +11,7 @@ Integrate <- function(f, st, dr) {
   ans <- 0
 
   for (i in seq(st, dr, 10))
-    ans <- ans + integrate(f, i, min(dr, i + 10))$value
+    ans <- ans + integrate(f, i, min(dr, i + 10), subdivisions=1000)$value
   
   return(ans)
 }

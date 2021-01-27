@@ -37,3 +37,42 @@ CentralMoment <- function(x, order) {
   }
   return(Integrate(integrant, -Inf, Inf))
 }
+
+# Average for two dimensional variable
+AverageProduct2d <- function(common_pdf) {
+  sum_for_x <- function(x) {
+    sum_for_y <- function(y) {
+      return(common_pdf(x, y) * x * y)
+    }
+    return(Integrate(MakeVectorized(sum_for_y), -Inf, Inf))
+  }
+  return(Integrate(MakeVectorized(sum_for_x), -Inf, Inf))
+}
+
+Covariance2d <- function(common_pdf) {
+  average_product <- AverageProduct2d(common_pdf)
+  
+  var1 <- BuildFromCommonPDF(common_pdf, 1)
+  var2 <- BuildFromCommonPDF(common_pdf, 2)
+
+  avg1 <- Average(var1)
+  avg2 <- Average(var2)
+
+  ans <- average_product - avg1 * avg2
+
+  return(ans)
+}
+
+Corelation2d <- function(common_pdf) {
+  covariance <- Covariance2d(common_pdf)
+
+  cnt1 <- BuildFromCommonPDF(common_pdf, 1)
+  cnt2 <- BuildFromCommonPDF(common_pdf, 2)
+
+  var1 <- Variance(cnt1)
+  var2 <- Variance(cnt2)
+
+  ans <- covariance / sqrt(var1 * var2)
+
+  return(ans)
+}
