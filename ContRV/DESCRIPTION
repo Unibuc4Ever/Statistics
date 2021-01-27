@@ -1,0 +1,10 @@
+Package: contRV
+Type: Package
+Title: Continuous Random Variables
+Version: 0.1.0
+Authors@R: person('Pelix', 'Fuscasu', email = 'mv2521@columbia.edu', role = c('aut', 'cre'))
+Description: This package presents utilities for working with continuous random variables.
+Encoding: UTF-8
+LazyData: true
+Depends: 
+    R (>= 3.1)

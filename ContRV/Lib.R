@@ -30,6 +30,10 @@ if (!exists('OperatorOverloadFile'))
 if (!exists('MainDistributionsFile'))
   source('MainDistributions.R')
 
-# Usefull functions.
+# Useful functions.
 if (!exists('UtilitiesFile'))
   source('Utilities.R')
+
+# 
+if (!exists('MomentUtilsFile'))
+  source('MomentUtils.R')
