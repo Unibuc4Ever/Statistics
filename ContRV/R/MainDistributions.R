@@ -1,4 +1,5 @@
 # Builds an uniform distribution from st to dr.
+#' @export
 BuildUniformDistribution <- function(st, dr) {
   if (st >= dr)
     stop("Invalid interval for uniform distribution!")
@@ -17,6 +18,7 @@ BuildUniformDistribution <- function(st, dr) {
 }
 
 # Builds a normal distribution given the mean and standard deviation.
+#' @export
 BuildNormalDistribution <- function(mean, stddev) {
   if (stddev <= 0)
     stop("Invalid standard deviation for normal distribution!")
@@ -29,7 +31,8 @@ BuildNormalDistribution <- function(mean, stddev) {
 }
 
 # Builds an exponential distribution given the rate parameter.
-BuildExponentialDistribution <- function(lambda) {
+#' @export
+uildExponentialDistribution <- function(lambda) {
   if (lambda <= 0)
     stop("Invalid rate parameter for exponential distribution!")
 
@@ -45,7 +48,8 @@ BuildExponentialDistribution <- function(lambda) {
 
 # Utility function for computing gamma. Used for computing the pdf 
 # of a chi-square distribution.
-ComputeGamma <- function(n) {
+#' @export
+omputeGamma <- function(n) {
   if (n == round(n))
     return (factorial(n - 1))
   if (n > 1)
@@ -61,6 +65,7 @@ ComputeGamma <- function(n) {
 }
 
 # Builds a chi-square distribution given the number of degrees of freedom.
+#' @export
 BuildChiSquareDistribution <- function(k) {
   if (k <= 0)
     stop("Invalid number of degrees of freedom for chi-square distribution!")

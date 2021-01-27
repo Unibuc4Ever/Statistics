@@ -35,6 +35,7 @@ BuildFromCDF <- function(cdf) {
 
 # Returns a CoreVariable.
 # If ax=1 then returns X, else return Y.
+#' @export
 BuildFromCommonPDF <- function(commonpdf, ax)
 {
   if (ax != 1 && ax != 2)
@@ -54,6 +55,7 @@ BuildFromCommonPDF <- function(commonpdf, ax)
 
 # Returns a CoreVariable.
 # Ax identifies the axis with set value "value"
+#' @export
 BuildConditionalPDF <- function(commonpdf, ax, val)
 {
   if (ax != 1 && ax != 2)

@@ -39,6 +39,7 @@ MakeVectorized <- function(f) {
 }
 
 # Returns T if the function f is a valid pdf
+#' @export
 CheckIfFunctionIsPDF <- function(pdf) {
   vectorized_pdf <- MakeVectorized(pdf)
 
@@ -53,6 +54,7 @@ CheckIfFunctionIsPDF <- function(pdf) {
 }
 
 # Gaseste constanta de normalizare a.i. functia sa fie un pdf.
+#' @export
 ComputeNormalizationConstant <- function(pdf) {
   vectorized_pdf <- MakeVectorized(pdf)
 
@@ -72,6 +74,7 @@ ComputeNormalizationConstant <- function(pdf) {
 }
 
 # Genereaza N valori dintr-o repartie data de un CoreVariable
+#' @export
 SamplePointsFromDistribution = function(dist, size) {
   ans = c()
   val = runif(size)
@@ -92,6 +95,7 @@ SamplePointsFromDistribution = function(dist, size) {
 }
 
 # Calculul mediei unei variabile aleatoare g(X).
+#' @export
 ComputeMeanForFunc <- function(X, g) {
   integrant <- function(t) {
     return(g(t) * X@pdf(t))
@@ -104,6 +108,7 @@ ComputeMeanForFunc <- function(X, g) {
 # Var(X) = E(X^2) - E^2[X]
 # X -> g(X)
 # Var(g(X)) = E(g^2(X)) - E^2[g(X)]
+#' @export
 ComputeVarForFunc <- function(X, g) {
   avggx  <- ComputeMeanForFunc(X, g)
   avgg2x <- ComputeMeanForFunc(X, function(x) { return(g(x)*g(x)) })
@@ -113,6 +118,7 @@ ComputeVarForFunc <- function(X, g) {
 
 # Computes a conditional probability
 # Conditional(var, a, b) is equivalent to P(a(var) | b(var))
+#' @export
 Conditional <- function(var, a, b = function(x) { return(T) }) {
   
   # returns measure of var which respects f

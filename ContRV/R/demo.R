@@ -6,7 +6,9 @@
 
 
 # Importam pachetul.
+library('contRV')
 
+#TODO: Remove this junk
 # Raw definition of the CoreVariable class.
 source('CoreVariable.R')
     
@@ -35,9 +37,6 @@ source('MomentUtils.R')
 #                                                         #
 ###########################################################
 
-# Importam pachetul.
-source('Lib.R')
-
 # Functie care poate fi normalizata
 ComputeNormalizationConstant(
   function(x) {
@@ -58,14 +57,13 @@ ComputeNormalizationConstant(
   }
 )
 
+
+
 ###########################################################
 #                                                         #
 #                        Cerinta II                       #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 # Functie care este densitate de probabilitate.
 CheckIfFunctionIsPDF(
@@ -95,14 +93,13 @@ CheckIfFunctionIsPDF(
   }
 )
 
+
+
 ###########################################################
 #                                                         #
 #                        Cerinta III                      #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 pdf <- function(x) {
   if (x >= 0 && x <= 1)
@@ -122,9 +119,7 @@ cdf <- function(x) {
 }
 
 var2 <- BuildFromCDF(cdf)
-plot(var2@pdf, -4, 4) # TODO
-
-
+plot(var2@pdf, -4, 4)
 
 wrong_pdf <- function(x) {
   if (x < 0 || x > 1)
@@ -135,11 +130,27 @@ wrong_pdf <- function(x) {
 v3 <- BuildFromPDF(wrong_pdf)
 
 
+
 ###########################################################
 #                                                         #
 #                        Cerinta IV                       #
 #                                                         #
 ###########################################################
+
+v1 <- BuildUniformDistribution(-10, 20)
+plot(v1)
+
+v2 <- BuildNormalDistribution(2, 6)
+plot(v2)
+
+v3 <- BuildExponentialDistribution(0.2)
+plot(v3)
+
+v4 <- BuildChiSquareDistribution(1)
+plot(v4)
+
+# TODO: ADD MORE DISTRIBUTIONS
+
 
 
 ###########################################################
@@ -147,9 +158,6 @@ v3 <- BuildFromPDF(wrong_pdf)
 #                        Cerinta V                        #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 v1 <- BuildNormalDistribution(2, 1)
 
@@ -166,14 +174,12 @@ print(RawMoment(v1, 7))
 print(CentralMoment(v1, 4))
 
 
+
 ###########################################################
 #                                                         #
 #                        Cerinta VI                       #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 v1 <- BuildNormalDistribution(1, 2)
 
@@ -185,15 +191,12 @@ print(ComputeMeanForFunc(v1, transformation))
 print(ComputeVarForFunc(v1, transformation))
 
 
+
 ###########################################################
 #                                                         #
 #                        Cerinta VII                      #
 #                                                         #
 ###########################################################
-
-
-# Importam pachetul.
-source('Lib.R')
 
 v1 <- BuildUniformDistribution(-10, 10)
 
@@ -210,11 +213,13 @@ prob <- Conditional(v1, is_smaller_2, is_positive)
 prob2 <- Conditional(v1, is_smaller_2)
 
 
+
 ###########################################################
 #                                                         #
 #                        Cerinta VIII                     #
 #                                                         #
 ###########################################################
+
 
 
 ###########################################################
@@ -223,21 +228,20 @@ prob2 <- Conditional(v1, is_smaller_2)
 #                                                         #
 ###########################################################
 
-# Importam pachetul.
-source('Lib.R')
-
 v1 <- BuildUniformDistribution(0, 1)
 vals <- SamplePointsFromDistribution(v1, 1000)
 hist(vals)
+
+v2 <- BuildNormalDistribution(0, 1)
+vals <- SamplePointsFromDistribution(v2, 1000)
+hist(vals)
+
 
 ###########################################################
 #                                                         #
 #                        Cerinta X                        #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 common_pdf <- function(x, y) {
   if (min(x, y) < 0 || max(x, y) > 4)
@@ -249,6 +253,7 @@ common_pdf <- function(x, y) {
 
 cov <- Covariance2d(common_pdf)
 print(cov)
+
 
 
 ###########################################################
@@ -272,6 +277,8 @@ v2 <- BuildFromCommonPDF(common_dist, ax=2)
 plot(v2@pdf, -4, 4)
 v3 <- BuildConditionalPDF(common_dist, 2, 1)
 plot(v3@pdf, -4, 4)
+
+
 
 ###########################################################
 #                                                         #
