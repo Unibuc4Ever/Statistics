@@ -16,7 +16,19 @@ Information <- function(dist_name = "") {
     else if (dist_name == "Uniforma") {
         cat("===================================================================
     Distributia uniforma reprezinta alegerea unei valori intr-un interval [a, b] 
-    in care toate valorile au aceeasi probabilitate")
+    in care toate valorile au aceeasi probabilitate
+    
+    Caracterizata prin 2 argumente:
+      - a: Capatul stanga
+      - b: Capatul dreapta
+    
+    Alte informatii:
+      - Suport: [a, b]
+      - PDF: 1 / (b - a)
+      - CDF: (x - a) / (b - a)
+      - media: (b - a) / 2
+      - mediana: (b - a) / 2
+      - dispersia: (b - a)^2 / 12")
     }
     else if (dist_name == "Normala") {
         cat("===================================================================
@@ -26,6 +38,7 @@ Information <- function(dist_name = "") {
       - sigma: Reprezinta deviatia standard
       
     Alte informatii: 
+      - Suport: (-Inf, Inf)
       - PDF: (e^(-1/2 * ((x - miu) / sigma)^2)) / (sigma * sqrt(2 * PI))
       - CDF: 1/2 * (1 + erf((x - miu) / (sigma * sqrt(2))))
       - media: miu
@@ -45,6 +58,7 @@ Information <- function(dist_name = "") {
       - lambda: Cu cat este mai mare lambda, cu atat masa probabilitatii se afla mai mult spre inceput.
       
     Alte informatii: 
+      - Suport: [0, Inf)
       - PDF: lambda * e^(-lambda * x)
       - CDF: 1 - e^(lambda * x)
       - media: 1 / lambda
