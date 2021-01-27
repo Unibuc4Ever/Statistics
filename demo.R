@@ -61,6 +61,15 @@ CheckIfFunctionIsPDF(
   }
 )
 
+CheckIfFunctionIsPDF(
+  function(x) {
+    if (x > 0 && x < 1)
+      return(2)
+    if (x > 2 && x < 3)
+      return(-1)
+    return(0)
+  }
+)
 
 ###########################################################
 #                                                         #
@@ -154,7 +163,7 @@ plot(v1)
 v2 <- BuildFromCommonPDF(common_dist, ax=2)
 plot(v2)
 v3 <- BuildConditionalPDF(common_dist, 2, 1) # WTF????
-
+plot(v3)
 
 ###########################################################
 #                                                         #

@@ -73,7 +73,7 @@ BuildConditionalPDF <- function(commonpdf, ax, val)
       return(commonpdf(point, val)) 
   }
 
-  integral <- integrate(MakeVectorized(new_pdf), -Inf, Inf)
+  integral <- integrate(MakeVectorized(new_pdf), -Inf, Inf)$value
 
   if (integral < 0 || abs(integral) < 1e-5)
     stop("Invalid slice of the distribution at given point!")
