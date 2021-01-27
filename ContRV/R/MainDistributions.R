@@ -32,7 +32,7 @@ BuildNormalDistribution <- function(mean, stddev) {
 
 # Builds an exponential distribution given the rate parameter.
 #' @export
-uildExponentialDistribution <- function(lambda) {
+BuildExponentialDistribution <- function(lambda) {
   if (lambda <= 0)
     stop("Invalid rate parameter for exponential distribution!")
 
@@ -49,7 +49,7 @@ uildExponentialDistribution <- function(lambda) {
 # Utility function for computing gamma. Used for computing the pdf 
 # of a chi-square distribution.
 #' @export
-omputeGamma <- function(n) {
+ComputeGamma <- function(n) {
   if (n == round(n))
     return (factorial(n - 1))
   if (n > 1)

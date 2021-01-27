@@ -262,9 +262,6 @@ print(cov)
 #                                                         #
 ###########################################################
 
-# Importam pachetul.
-source('Lib.R')
-
 common_dist <- function(x, y) {
   if (x < 0 || y < 0 || x > 1 || y > 2)
     return(0)
@@ -285,8 +282,6 @@ plot(v3@pdf, -4, 4)
 #                        Cerinta XII                      #
 #                                                         #
 ###########################################################
-
-source('Lib.R')
 
 v1 <- BuildNormalDistribution(1, 1)
 v2 <- BuildNormalDistribution(1, 1)
