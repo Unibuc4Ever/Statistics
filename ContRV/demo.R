@@ -169,7 +169,7 @@ print(ComputeVarForFunc(v1, transformation))
 
 source('Lib.R')
 Information('Exponentiala')
-Information('Poisson')
+Information('Normala')
 
 ###########################################################
 #                                                         #
