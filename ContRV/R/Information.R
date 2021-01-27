@@ -1,6 +1,7 @@
 # Used as guards
 Information <- T
 
+#' @export
 Information <- function(dist_name = "") {
     if (dist_name == "") {
         cat("===================================================================
