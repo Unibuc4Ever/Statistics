@@ -104,6 +104,17 @@ cdf <- function(x) {
 var2 <- BuildFromCDF(cdf)
 plot(var2@pdf, -4, 4) # TODO
 
+
+
+wrong_pdf <- function(x) {
+  if (x < 0 || x > 1)
+    return(0)
+  return(2)
+}
+
+v3 <- BuildFromPDF(wrong_pdf)
+
+
 ###########################################################
 #                                                         #
 #                        Cerinta IV                       #
@@ -159,6 +170,24 @@ print(ComputeVarForFunc(v1, transformation))
 #                        Cerinta VII                      #
 #                                                         #
 ###########################################################
+
+
+# Importam pachetul.
+source('Lib.R')
+
+v1 <- BuildUniformDistribution(-10, 10)
+
+is_positive <- function(x) {
+  return(x > 0)
+}
+
+is_smaller_2 <- function(x) {
+  return(x < 2)
+}
+
+prob <- Conditional(v1, is_smaller_2, is_positive)
+
+prob2 <- Conditional(v1, is_smaller_2)
 
 
 ###########################################################
