@@ -171,6 +171,9 @@ plot(v3)
 #                                                         #
 ###########################################################
 
+source('Lib.R')
+
+
 v1 <- BuildUniformDistribution(1, 2)
 v2 <- BuildNormalDistribution(2, 3)
 v3 <- v1 + v2
@@ -178,3 +181,4 @@ v4 <- v1 - v2
 v5 <- -v1
 v6 <- v1 * v2
 # TODO: Add numeric types
+plot(v6)

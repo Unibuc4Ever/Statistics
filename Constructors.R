@@ -19,7 +19,7 @@ BuildFromPDF <- function(pdf) {
   cdf <- function(x) {
     ans <- c()
     for (elem in x)
-      ans <- c(ans, integrate(vectorized_pdf, -Inf, elem)$value)
+      ans <- c(ans, Integrate(vectorized_pdf, -Inf, elem))
     return(ans)
   }
   
@@ -54,7 +54,7 @@ BuildFromCommonPDF <- function(commonpdf, ax)
       else
         return(commonpdf(w, point))
     }
-    return(integrate(MakeVectorized(val_in_point), -Inf, Inf)$value)
+    return(Integrate(MakeVectorized(val_in_point), -Inf, Inf))
   }
   return(BuildFromPDF(new_pdf))
 }
@@ -73,7 +73,7 @@ BuildConditionalPDF <- function(commonpdf, ax, val)
       return(commonpdf(point, val)) 
   }
 
-  integral <- integrate(MakeVectorized(new_pdf), -Inf, Inf)$value
+  integral <- Integrate(MakeVectorized(new_pdf), -Inf, Inf)
 
   if (integral < 0 || abs(integral) < 1e-5)
     stop("Invalid slice of the distribution at given point!")

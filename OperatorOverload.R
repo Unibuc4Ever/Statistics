@@ -16,7 +16,7 @@ setMethod(f="+",
           return(e1@pdf(k) * e2@pdf(x - k))
         }
         
-        rez_x <- integrate(convolutie, -Inf, Inf)$value
+        rez_x <- Integrate(convolutie, -Inf, Inf)
         ans <- c(ans, rez_x)
       }
 
@@ -62,7 +62,7 @@ setMethod(f="*",
         }
         
         eps <- 10^-9
-        rez_x <- integrate(convolutie, -Inf, Inf)$value
+        rez_x <- Integrate(convolutie, -Inf, Inf)
         ans <- c(ans, rez_x)
       }
 

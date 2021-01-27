@@ -31,7 +31,7 @@ setMethod(
       return(t * x@pdf(t))
     }
     # To check if we want to remove "With absolute error ..."
-    return(integrate(integrant, -Inf, Inf))
+    return(Integrate(integrant, -Inf, Inf))
   }
 )
 

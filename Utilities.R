@@ -1,6 +1,38 @@
 # Used as guards
 UtilitiesFile <- T
 
+# To be impoved
+Integrate <- function(f, st, dr) {
+  st <- max(st, -30)
+  dr <- min(dr, 30)
+  if (st >= dr)
+    return(0)
+
+  ans <- 0
+
+  for (i in seq(st, dr, 10))
+    ans <- ans + integrate(f, i, min(dr, i + 10))$value
+  
+  return(ans)
+}
+
+# To be left alone
+Minimum <- function(f, st, dr) {
+  st <- max(st, -30)
+  dr <- min(dr, 30)
+  if (st >= dr)
+    return(0)
+
+  ans <- 1e9
+
+  for (i in seq(st, dr, 10)) {
+    act <- optimize(f, interval=c(st, min(dr, i)))$minimum
+    ans <- min(ans, act)
+  }
+  
+  return(ans)
+}
+
 # Makes functions from R -> R to be from R* to R*
 MakeVectorized <- function(f) {
   return(function(v) {
@@ -16,8 +48,8 @@ CheckIfFunctionIsPDF <- function(pdf) {
   vectorized_pdf <- MakeVectorized(pdf)
 
   # Should do smth about limits
-  minimum <- optimize(vectorized_pdf, interval=c(-1e18, 1e18))$minimum
-  integral <- integrate(vectorized_pdf, -Inf, Inf)$value
+  minimum <- Minimum(vectorized_pdf)
+  integral <- Integrate(vectorized_pdf, -Inf, Inf)
 
   # Pozitive and integral 1
   if (minimum >= 0 && abs(integral - 1) <= 1e-5)
@@ -29,7 +61,7 @@ CheckIfFunctionIsPDF <- function(pdf) {
 ComputeNormalizationConstant <- function(pdf) {
   vectorized_pdf <- MakeVectorized(pdf)
 
-  integral <- integrate(vectorized_pdf, -Inf, Inf)$value
+  integral <- Integrate(vectorized_pdf, -Inf, Inf)
 
   if (abs(integral) < 1e-5)
     stop('Function has the integral equal to 0!')
