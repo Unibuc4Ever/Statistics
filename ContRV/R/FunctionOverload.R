@@ -1,8 +1,3 @@
-# Used as guards
-FunctionOverloadFile <- T
-
-if (!exists('CoreVarFile'))
-  source('CoreVariable.R')
 
 setMethod(
   f = "print",

@@ -1,6 +1,3 @@
-# Used as guards
-UtilitiesFile <- T
-
 # To be impoved
 Integrate <- function(f, st, dr) {
   st <- max(st, -30)
@@ -11,7 +8,7 @@ Integrate <- function(f, st, dr) {
   ans <- 0
 
   for (i in seq(st, dr, 10))
-    ans <- ans + integrate(f, i, min(dr, i + 10))$value
+    ans <- ans + integrate(f, i, min(dr, i + 10), subdivisions=1000)$value
   
   return(ans)
 }
@@ -42,6 +39,7 @@ MakeVectorized <- function(f) {
 }
 
 # Returns T if the function f is a valid pdf
+#' @export
 CheckIfFunctionIsPDF <- function(pdf) {
   vectorized_pdf <- MakeVectorized(pdf)
 
@@ -56,6 +54,7 @@ CheckIfFunctionIsPDF <- function(pdf) {
 }
 
 # Gaseste constanta de normalizare a.i. functia sa fie un pdf.
+#' @export
 ComputeNormalizationConstant <- function(pdf) {
   vectorized_pdf <- MakeVectorized(pdf)
 
@@ -75,6 +74,7 @@ ComputeNormalizationConstant <- function(pdf) {
 }
 
 # Genereaza N valori dintr-o repartie data de un CoreVariable
+#' @export
 SamplePointsFromDistribution = function(dist, size) {
   ans = c()
   val = runif(size)
@@ -95,6 +95,7 @@ SamplePointsFromDistribution = function(dist, size) {
 }
 
 # Calculul mediei unei variabile aleatoare g(X).
+#' @export
 ComputeMeanForFunc <- function(X, g) {
   integrant <- function(t) {
     return(g(t) * X@pdf(t))
@@ -107,8 +108,38 @@ ComputeMeanForFunc <- function(X, g) {
 # Var(X) = E(X^2) - E^2[X]
 # X -> g(X)
 # Var(g(X)) = E(g^2(X)) - E^2[g(X)]
+#' @export
 ComputeVarForFunc <- function(X, g) {
   avggx  <- ComputeMeanForFunc(X, g)
   avgg2x <- ComputeMeanForFunc(X, function(x) { return(g(x)*g(x)) })
   return(avgg2x - avggx^2)
+}
+
+
+# Computes a conditional probability
+# Conditional(var, a, b) is equivalent to P(a(var) | b(var))
+#' @export
+Conditional <- function(var, a, b = function(x) { return(T) }) {
+  
+  # returns measure of var which respects f
+  RespectFunction <- function(f) {
+    nr_is_ok <- function(x) {
+      if (f(x))
+        return(var@pdf(x))
+      return(0)
+    }
+
+    ans <- Integrate(MakeVectorized(nr_is_ok), -Inf, Inf)
+    
+    return(ans)
+  }
+
+  both <- function(x) {
+    return(a(x) && b(x))
+  }
+
+  a_and_b <- RespectFunction(both)
+  b <- RespectFunction(b)
+
+  return(a_and_b / b)
 }

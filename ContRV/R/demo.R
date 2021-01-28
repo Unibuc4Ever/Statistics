@@ -6,7 +6,29 @@
 
 
 # Importam pachetul.
-source('Lib.R')
+library('contRV')
+
+#TODO: Remove this junk
+# Raw definition of the CoreVariable class.
+source('CoreVariable.R')
+    
+# CDF and PMF constructors of the CoreVariable.
+source('Constructors.R')
+
+# Overload of various functions function.
+source('FunctionOverload.R')
+
+# Overload of the print function.
+source('OperatorOverload.R')
+
+# Include main distributions.
+source('MainDistributions.R')
+
+# Useful functions.
+source('Utilities.R')
+
+# 
+source('MomentUtils.R')
 
 
 ###########################################################
@@ -14,9 +36,6 @@ source('Lib.R')
 #                        Cerinta I                        #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 # Functie care poate fi normalizata
 ComputeNormalizationConstant(
@@ -38,14 +57,13 @@ ComputeNormalizationConstant(
   }
 )
 
+
+
 ###########################################################
 #                                                         #
 #                        Cerinta II                       #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 # Functie care este densitate de probabilitate.
 CheckIfFunctionIsPDF(
@@ -75,14 +93,13 @@ CheckIfFunctionIsPDF(
   }
 )
 
+
+
 ###########################################################
 #                                                         #
 #                        Cerinta III                      #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 pdf <- function(x) {
   if (x >= 0 && x <= 1)
@@ -102,7 +119,17 @@ cdf <- function(x) {
 }
 
 var2 <- BuildFromCDF(cdf)
-plot(var2@pdf, -4, 4) # TODO
+plot(var2@pdf, -4, 4)
+
+wrong_pdf <- function(x) {
+  if (x < 0 || x > 1)
+    return(0)
+  return(2)
+}
+
+v3 <- BuildFromPDF(wrong_pdf)
+
+
 
 ###########################################################
 #                                                         #
@@ -110,15 +137,27 @@ plot(var2@pdf, -4, 4) # TODO
 #                                                         #
 ###########################################################
 
+v1 <- BuildUniformDistribution(-10, 20)
+plot(v1)
+
+v2 <- BuildNormalDistribution(2, 6)
+plot(v2)
+
+v3 <- BuildExponentialDistribution(0.2)
+plot(v3)
+
+v4 <- BuildChiSquareDistribution(1)
+plot(v4)
+
+# TODO: ADD MORE DISTRIBUTIONS
+
+
 
 ###########################################################
 #                                                         #
 #                        Cerinta V                        #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 v1 <- BuildNormalDistribution(2, 1)
 
@@ -135,14 +174,12 @@ print(RawMoment(v1, 7))
 print(CentralMoment(v1, 4))
 
 
+
 ###########################################################
 #                                                         #
 #                        Cerinta VI                       #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 v1 <- BuildNormalDistribution(1, 2)
 
@@ -154,11 +191,27 @@ print(ComputeMeanForFunc(v1, transformation))
 print(ComputeVarForFunc(v1, transformation))
 
 
+
 ###########################################################
 #                                                         #
 #                        Cerinta VII                      #
 #                                                         #
 ###########################################################
+
+v1 <- BuildUniformDistribution(-10, 10)
+
+is_positive <- function(x) {
+  return(x > 0)
+}
+
+is_smaller_2 <- function(x) {
+  return(x < 2)
+}
+
+prob <- Conditional(v1, is_smaller_2, is_positive)
+
+prob2 <- Conditional(v1, is_smaller_2)
+
 
 
 ###########################################################
@@ -176,18 +229,21 @@ Information('Chi squared')
 Information('Pareto')
 Information('nimic')
 
+
 ###########################################################
 #                                                         #
 #                        Cerinta IX                       #
 #                                                         #
 ###########################################################
 
-# Importam pachetul.
-source('Lib.R')
-
 v1 <- BuildUniformDistribution(0, 1)
 vals <- SamplePointsFromDistribution(v1, 1000)
 hist(vals)
+
+v2 <- BuildNormalDistribution(0, 1)
+vals <- SamplePointsFromDistribution(v2, 1000)
+hist(vals)
+
 
 ###########################################################
 #                                                         #
@@ -195,21 +251,24 @@ hist(vals)
 #                                                         #
 ###########################################################
 
-# Importam pachetul.
-source('Lib.R')
-
 common_pdf <- function(x, y) {
-
+  if (min(x, y) < 0 || max(x, y) > 4)
+    return(0)
+  if (x + y > 6 || x + y < 2)
+    return(0)
+  return(1 / 12)
 }
+
+cov <- Covariance2d(common_pdf)
+print(cov)
+
+
 
 ###########################################################
 #                                                         #
 #                        Cerinta XI                       #
 #                                                         #
 ###########################################################
-
-# Importam pachetul.
-source('Lib.R')
 
 common_dist <- function(x, y) {
   if (x < 0 || y < 0 || x > 1 || y > 2)
@@ -224,13 +283,13 @@ plot(v2@pdf, -4, 4)
 v3 <- BuildConditionalPDF(common_dist, 2, 1)
 plot(v3@pdf, -4, 4)
 
+
+
 ###########################################################
 #                                                         #
 #                        Cerinta XII                      #
 #                                                         #
 ###########################################################
-
-source('Lib.R')
 
 v1 <- BuildNormalDistribution(1, 1)
 v2 <- BuildNormalDistribution(1, 1)

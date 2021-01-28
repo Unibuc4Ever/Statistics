@@ -2,7 +2,9 @@ Package: contRV
 Type: Package
 Title: Continuous Random Variables
 Version: 0.1.0
-Authors@R: person('Pelix', 'Fuscasu', email = 'mv2521@columbia.edu', role = c('aut', 'cre'))
+Authors@R: c(person('Felix', 'Puscasu', email = 'felix@puscasu.com', role = c()),
+             person('Raluca', 'Tudor', email = 'raluca@tudor.com', role = c()),
+             person('Theodor', 'Moroianu', email = 'theodor@moroianu.com', role = c("aut", "cre")))
 Description: This package presents utilities for working with continuous random variables.
 Encoding: UTF-8
 LazyData: true

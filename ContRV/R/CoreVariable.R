@@ -1,6 +1,3 @@
-# Used for making "manual" loading
-CoreVarFile <- T
-
 # This module gives the S4 class definition of the
 # CoreVariable type, around which is built most of 
 # The project.
@@ -28,9 +25,9 @@ CoreVariable <- setClass (
   #     )
   
   # Checks if the object is valid.
-  #validity = function(object) {
-  #  if (abs(integrate(object@pdf, -Inf, Inf) - 1) > 1e-3)
-  #    return("CSF doesn't have 1 as limit at +Inf!")
-  #  return(T)
-  #}
+  validity = function(object) {
+   if (abs(object@cdf(Inf) - 1) > 1e-1)
+     return("Density function doesn't add to 1!")
+   return(T)
+  }
 )
