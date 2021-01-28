@@ -168,8 +168,13 @@ print(ComputeVarForFunc(v1, transformation))
 ###########################################################
 
 source('Lib.R')
-Information('Exponentiala')
+Information()
+Information('Uniforma')
 Information('Normala')
+Information('Exponentiala')
+Information('Chi squared')
+Information('Pareto')
+Information('nimic')
 
 ###########################################################
 #                                                         #
