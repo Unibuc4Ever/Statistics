@@ -52,11 +52,11 @@ setMethod(f="*",
 
       for (x in x_list) {
         convolutie <- function(k) {
-          return(e1@pdf(k) * e2@pdf(x / k))
+          return(e1@pdf(k) * e2@pdf(x / k) / abs(k))
         }
         
-        eps <- 10^-9
-        rez_x <- Integrate(convolutie, -Inf, Inf)
+        eps <- 1e-6
+        rez_x <- integrate(convolutie, -Inf, -eps) + integrate(convolutie, eps, Inf)
         ans <- c(ans, rez_x)
       }
 
@@ -112,7 +112,7 @@ setMethod(f="*",
       stop("Unable to multiply by 0!")
       
     new_pdf <- function(x) {
-      return(e2@pdf(x / e1))
+      return(e2@pdf(x / e1) / e1)
     }
     return(BuildFromPDF(new_pdf))
   }

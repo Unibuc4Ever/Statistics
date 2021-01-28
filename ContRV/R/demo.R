@@ -8,27 +8,29 @@
 # Importam pachetul.
 library('contRV')
 
-#TODO: Remove this junk
-# Raw definition of the CoreVariable class.
-source('CoreVariable.R')
-    
-# CDF and PMF constructors of the CoreVariable.
-source('Constructors.R')
+load_stuff <- function() {
+  rm(list=ls())
+  #TODO: Remove this junk
+  # Raw definition of the CoreVariable class.
+  source('CoreVariable.R')
+      
+  # CDF and PMF constructors of the CoreVariable.
+  source('Constructors.R')
 
-# Overload of various functions function.
-source('FunctionOverload.R')
+  # Overload of various functions function.
+  source('FunctionOverload.R')
 
-# Overload of the print function.
-source('OperatorOverload.R')
+  # Overload of the print function.
+  source('OperatorOverload.R')
 
-# Include main distributions.
-source('MainDistributions.R')
+  # Include main distributions.
+  source('MainDistributions.R')
 
-# Useful functions.
-source('Utilities.R')
-
-# 
-source('MomentUtils.R')
+  # Useful functions.
+  source('Utilities.R')
+  # 
+  source('MomentUtils.R')
+}
 
 
 ###########################################################
@@ -291,11 +293,18 @@ plot(v3@pdf, -4, 4)
 #                                                         #
 ###########################################################
 
+load_stuff()
+
 v1 <- BuildNormalDistribution(1, 1)
+v2 <- v1 / 2
+plot(v2)
+
 v2 <- BuildNormalDistribution(1, 1)
 
-v3 <- v1 + v2
-plot(v3)
+v3 <- v1 * v2
+
+# v3 <- v1 + v2
+plot(v3@pdf, -10, 10)
 
 v4 <- BuildUniformDistribution(-1, 1)
 v5 <- BuildUniformDistribution(-2, 2)

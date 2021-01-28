@@ -26,8 +26,11 @@ CoreVariable <- setClass (
   
   # Checks if the object is valid.
   validity = function(object) {
-   if (abs(object@cdf(Inf) - 1) > 1e-1)
+   if (abs(object@cdf(Inf) - 1) > 1e-1) {
+     print("Total density:")
+     print(object@cdf(Inf))
      return("Density function doesn't add to 1!")
+   }
    return(T)
   }
 )
