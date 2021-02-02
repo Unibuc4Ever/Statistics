@@ -151,8 +151,6 @@ plot(v3)
 v4 <- BuildChiSquareDistribution(1)
 plot(v4)
 
-# TODO: ADD MORE DISTRIBUTIONS
-
 
 
 ###########################################################
@@ -222,7 +220,6 @@ prob2 <- Conditional(v1, is_smaller_2)
 #                                                         #
 ###########################################################
 
-source('Lib.R')
 Information()
 Information('Uniforma')
 Information('Normala')

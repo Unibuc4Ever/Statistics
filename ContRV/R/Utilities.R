@@ -43,7 +43,6 @@ MakeVectorized <- function(f) {
 CheckIfFunctionIsPDF <- function(pdf) {
   vectorized_pdf <- MakeVectorized(pdf)
 
-  # Should do smth about limits
   minimum <- Minimum(vectorized_pdf, -1e9, 1e9)
   integral <- Integrate(vectorized_pdf, -Inf, Inf)
 
